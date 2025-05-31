@@ -1,0 +1,28 @@
+Muñoz San Agustin Victoria Monserrat                                                     320094187
+CREATE TABLE Alumno (
+    numCta NUMBER(9) NOT NULL,
+    nombreA VARCHAR(210) NOT NULL,
+    edad INT NOT NULL,
+    creditos INT NOT NULL,
+    CONSTRAINT ch_creditos CHECK (creditos>= 60),
+    CONSTRAINT ch_edad CHECK (edad >= 18),
+    CONSTRAINT uq_nombreA UNIQUE (nombreA),
+    CONSTRAINT PKA PRIMARY KEY (numCta)
+);
+
+CREATE TABLE Curso (
+    cursoId NUMBER(4) NOT NULL,
+    nombreC VARCHAR(70) NOT NULL,
+    creditos INT DEFAULT 5,                      
+    CONSTRAINT uq_nombreC UNIQUE (nombreC),      
+    CONSTRAINT PKC PRIMARY KEY (cursoId)  
+);
+
+CREATE TABLE Inscrito (
+    numCta NUMBER(9) NOT NULL,
+    cursoId NUMBER(4) NOT NULL,
+    semestre NUMBER(5) NOT NULL,
+    CONSTRAINT PKi PRIMARY KEY (numCta, cursoId),
+    CONSTRAINT FKA FOREIGN KEY (numCta) REFERENCES Alumno(numCta),
+    CONSTRAINT FKC FOREIGN KEY (cursoId) REFERENCES Curso(cursoId)
+);

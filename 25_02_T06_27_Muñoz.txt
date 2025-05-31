@@ -1,0 +1,55 @@
+Muñoz San Agustin Victoria Monserrat
+
+3. Construir una tabla Empleados donde se registra el nombre del empleado (un solo campo), su puesto (Ingeniero, secretaria, técnico, mensajero) si no se especifica será ayudante general , también se agrega una columna con un código único para cada empleado que debe empezar con tres letras y cuatro numero ejemplo[CDX0001] 
+a. Cada empleado es un registro en la base de datos 
+b. NO hay empleados con más de un cargo o puesto. 
+c. No se debe permitir ingresar dos veces o más un mismo nombre de empleado. 
+d. Agregar un nombre representativo a cada restricción.  (ponerle un nombre a casa restricción) 
+
+CREATE TABLE Empleados (
+    nombre VARCHAR(100) UNIQUE NOT NULL,
+    codigoEmpleado VARCHAR(7) UNIQUE NOT NULL
+    CONSTRAINT codigo_ch CHECK (codigoEmpleado LIKE '[A-Z][A-Z][A-Z][0-9][0-9][0-9][0-9]'),
+    CONSTRAINT puesto_ch CHECK (puesto IN ('Ingeniero', 'Secretaria', 'Técnico', 'Mensajero', 'Ayudante General')) DEFAULT 'Ayudante General',
+    COINSTRAINT PK PRIMARY KEY (codigoEmpleado)
+);
+
+
+4. Construir una tabla Títulos donde se registra los títulos académicos que una persona ha obtenido, Nombre,  número de cedula profesional, Titulo (Licenciatura, Maestría, Doctorado) en caso de no poner nada se deberá poner Técnico, Nombre de la carrera cursada, Nombre de la institución,  también se registra el año del título. 
+a. Una persona no puede tener más de un título del  mismo nivel académico en el mismo año 
+b. Una persona no puede obtener el mismo título y grado de una misma institución. (Verificar) 
+c. Agregar una llave primaria. 
+d. Agregar un nombre representativo a cada restricción. (ponerle un nombre a cada restricción) 
+
+CREATE TABLE Titulos (
+    nombreP VARCHAR(100) NOT NULL,
+    cedulaP VARCHAR(20) UNIQUE NOT NULL,
+    carrera VARCHAR(100) NOT NULL,
+    institucion VARCHAR(100) NOT NULL,
+    añoTitulo INT NOT NULL,
+    CONSTRAINT CHECK (tituloObtenido IN ('Licenciatura', 'Maestría', 'Doctorado', 'Técnico')) DEFAULT 'Técnico',
+    CONSTRAINT unique_titulo_año UNIQUE (nombrePersona, tituloObtenido, añoTitulo),
+    CONSTRAINT unique_titulo_institucion UNIQUE (nombrePersona, tituloObtenido, institucion)
+);
+
+
+5. Construir una tabla para guardar las películas que participan en el festiva de cine 2021, se registra una clave por película, el titulo de la película, Director, año de estreno, duración, genero y clasificación. 
+a. Agregar un nombre representativo a cada restricción 
+b. Un director no puede participar con más de una película por año de estreno. 
+c. Un director no puede participar con más de una película del mismo genero. 
+d. La duración mínima de una película debe ser de 120 minutos 
+e. No se puede permitir películas de antes del 2019 y tampoco más allá del 2021, es forzó el año 
+f. El genero solo puede ser de (Acción, Ciencia Ficción, Comedia, Drama, Fantasía, Terror y Suspenso) también se puede omitir el genero 
+g. La clasificación debe ser forzosa, por default será B15, la clasificaciones son A,B,B15,C,D
+
+CREATE TABLE Peliculas (
+    claveP VARCHAR(20) UNIQUE NOT NULL,
+    tituloP VARCHAR(100) NOT NULL,
+    nombreD VARCHAR(100) NOT NULL,
+    añoE INT NOT NULL CHECK (añoEstreno >= 2019 AND añoEstreno <= 2021),
+    duracion INT NOT NULL CHECK (duracion >= 120),
+    CONSTRAINT CHECK (genero ('Acción', 'Ciencia Ficción', 'Comedia', 'Drama', 'Fantasía', 'Terror', 'Suspenso')),
+    CONSTRAINT class_ch CHECK (clasificacion IN ('A', 'B', 'B15', 'C', 'D')) DEFAULT 'B15',
+    CONSTRAINT unique_director_año UNIQUE (director, añoEstreno),
+    CONSTRAINT unique_director_genero UNIQUE (director, genero)
+);
