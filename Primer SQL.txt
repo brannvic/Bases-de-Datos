@@ -1,0 +1,7 @@
+CREATE TABLE clientes(
+id_cliente INT NOT NULL,
+num_contrato INT NOT NULL,
+nombre VARCHAR(100),
+RFC VARCHAR(13),
+CONSTRAINT id PRIMARY KEY (id_cliente),
+)

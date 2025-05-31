@@ -1,0 +1,78 @@
+martes 18 de marzo
+Pi n_sucursales (sigma (plazo>12 A corriente=SI)(Prestamos)
+select n_sucursales
+from Prestamos
+where plazo>12 AND corriente=SI
+
+Pi n_sucursales, ·prestamo (sigma  (plazo=24 V importe<=200000)(Prestamos)
+select n_sucursales, ·sucursales
+from Prestamos
+where plazo=24 
+OR importe<=200000
+
+Pi n_sucursales (sigma (plazo>12 A corriente=SI)(Prestamos)
+select n_sucursales
+from Prestamos
+where plazo>12 AND corriente=SI
+
+Pi n_sucursales (sigma  (plazo=24 V importe<=200000)(Prestamos)
+select n_sucursales, ·sucursales
+from Prestamos
+where plazo=24 
+OR importe<=200000
+
+
+Jueves 20 de marzo
+Abril C-305
+González C-201
+Rodriguez C-222
+
+a) 
+1 2 3 2 3 4
+1 2 3 2 3 5
+6 7 8 7 8 10 
+9 7 8 7 8 10
+
+b)
+1 2 3 2 3 4
+1 2 3 2 3 5
+6 7 8 7 8 10
+9 7 8 7 8 10
+
+c) no hay nada
+
+d)
+1 2 7 3 8 10
+6 7 2 3 8 4
+6 7 2 8 3 5
+9 7
+
+e) es lo mismo que la d)
+
+1. Miraflores P_17 200,000 12/12/17 12 SI
+PI * [sigma nombre_sucursal ="Miraflores"][Prestamo]
+SELECT *
+FROM Prestamos
+WHERE nombre_sucursal="Miraflores"
+
+2. PI *(sigma (prestatario, cuenta, nombre_sucursal)
+SELECT n_cliente FROM Titular_Cuenta
+UNION
+SELECT n_cuenta FROM Prestatario
+
+martes 25 de marzo
+3)
+PI n_cliente (Titular_cuenta)-PIn_cliente (Prestatario)
+SELECT n_cliente
+FROM Titular_cuenta
+EXCEPT
+SELECT n_cliente
+FROM Prestatario
+
+4)
+PIn_cliente (Titular_cuenta) DISYUNCION  PIn_cliente (Prestatario)
+SELECT n_cliente
+FROM Titular_cuenta
+INTERSECT
+SELECT n_cliente
+FROMPrestatario
